@@ -14,10 +14,6 @@ python3 d2bsitemlogger.py
 
 This requires python3 to be installed.
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
 * **David Fountain** - *Initial work* - [SavSin](https://github.com/DavFount)
