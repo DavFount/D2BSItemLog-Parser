@@ -27,7 +27,7 @@ import string
 print('Hello!')
 
 # API Webhook
-api_url = 'https://webhook.site/e6d80360-ef6f-4b1f-bca0-d55ee96dd5ef'
+api_url = 'https://webhook.site/ffb5bb10-8c00-4b5b-9418-7f095511d3ed'
 
 # path to itemlog.txt (remember to escape)
 # c:\users\bob\ ==> should be ==> c:\\users\\bob\\
@@ -87,24 +87,25 @@ def main():
             continue
 
         if current_line == 0:
-            current_line = len(lines)-5
+            current_line = len(lines)-10
             continue
 
         for idx, line in enumerate(lines):
             if idx >= current_line:
-
-                regex = r'\[(.+?)\] <(.+?)> <(.+?)> <(.+?)> \((.+?)\) (.+?)$|$'
+                regex = r'\[(.+?)\] <(.+?)> <(.+?)> <(.+?)> <(.+?)> <(.+?)> \((.+?)\) (.+?)$|$'
 
                 match = re.search(regex, line)
 
                 if match:
                     timestamp = match.group(1)
-                    character = match.group(2)
-                    area = match.group(3)
-                    action = match.group(4)
-                    quality = match.group(5)
+                    profile = match.group(2)
+                    character = match.group(3)
+                    difficulty = match.group(4)
+                    area = match.group(5)
+                    action = match.group(6)
+                    quality = match.group(7)
 
-                    item = match.group(6)
+                    item = match.group(8)
 
                     itemArray = []
                     itemStats = []
@@ -137,7 +138,9 @@ def main():
                     # Send to the API
                     send_to_api(itemInfo={
                         "Timestamp": timestamp,
+                        "Profile": profile,
                         "Character": character,
+                        "Difficulty": difficulty,
                         "Area": area,
                         "Action": action,
                         "Quality": quality,
