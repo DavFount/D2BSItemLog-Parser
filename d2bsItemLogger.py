@@ -139,17 +139,16 @@ def main():
 
                     # Send to the API
                     send_to_api(itemInfo={
-                        "Date": dateTime[0],
-                        "Time": dateTime[1],
-                        "Profile": profile,
-                        "Character": character,
-                        "Difficulty": difficulty,
-                        "Area": area,
-                        "Action": action,
-                        "Quality": quality,
-                        "ItemName": itemName,
-                        "Stats": itemStats,
-                        "id": event_id
+                        "date": dateTime[0],
+                        "time": dateTime[1],
+                        "profile": profile,
+                        "character": character,
+                        "difficulty": difficulty,
+                        "area": area,
+                        "action": action,
+                        "quality": quality,
+                        "itemName": itemName,
+                        "stats": itemStats
                     })
                 else:
                     print(f'Unable to parse {line}.')
