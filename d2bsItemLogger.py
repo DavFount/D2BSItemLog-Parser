@@ -104,6 +104,8 @@ def main():
                     area = match.group(5)
                     action = match.group(6)
                     quality = match.group(7)
+                    
+                    dateTime = timestamp.split(' ')
 
                     item = match.group(8)
 
@@ -137,7 +139,8 @@ def main():
 
                     # Send to the API
                     send_to_api(itemInfo={
-                        "Timestamp": timestamp,
+                        "Date": dateTime[0],
+                        "Time": dateTime[1],
                         "Profile": profile,
                         "Character": character,
                         "Difficulty": difficulty,
