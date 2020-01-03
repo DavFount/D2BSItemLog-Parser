@@ -23,11 +23,15 @@ import time
 import random
 import re
 import string
+from getpass import getpass
 
 print('Hello!')
 
 # API Webhook
-api_url = 'https://webhook.site/ffb5bb10-8c00-4b5b-9418-7f095511d3ed'
+api_url = 'http://localhost:3000/api/v1/items'
+api_login_url = 'http://localhost:3000/api/v1/login'
+api_token = ''
+
 
 # path to itemlog.txt (remember to escape)
 # c:\users\bob\ ==> should be ==> c:\\users\\bob\\
@@ -51,12 +55,25 @@ always_actions = ['Sold', 'Shopped', 'Gambled', 'Dropped',
 
 
 def send_to_api(itemInfo):
-    headers = {'Content-Type': 'application/json'}
-    data = {}
-    data['content'] = itemInfo
-    payload = json.dumps(data, indent=4)
+    headers = {'Content-Type': 'application/json',
+               'Authorization': 'Bearer ' + api_token}
+    payload = json.dumps(itemInfo, indent=4)
 
-    r = requests.post(api_url, data=payload, headers=headers)
+    # r = requests.post(api_url, data=payload, headers=headers)
+    print(itemInfo)
+
+
+def login(userInfo):
+    headers = {'Content-Type': 'application/json'}
+    payload = json.dumps(userInfo, indent=4)
+
+    r = requests.post(api_login_url, data=payload, headers=headers)
+    json_r = r.json()
+    global api_token
+    api_token = json_r['token']
+    if(api_token):
+        print(f'You are logged now logged in as {json_r["result"]["name"]}.')
+        main()
 
 
 def generate_event_id(n):
@@ -104,7 +121,7 @@ def main():
                     area = match.group(5)
                     action = match.group(6)
                     quality = match.group(7)
-                    
+
                     dateTime = timestamp.split(' ')
 
                     item = match.group(8)
@@ -168,8 +185,18 @@ def main():
         time.sleep(sleep_between_checks)
 
 
+def promptLogin():
+    username = input('Enter your username: ')
+    password = getpass('Enter your password (input hidden): ')
+
+    login(userInfo={
+        "name": username,
+        "password": password
+    })
+
+
 if __name__ == '__main__':
     print(f'[START] Greetings! :-)')
     print(f'[OK] logfile: {itemlog}')
     print(f'------------')
-    main()
+    promptLogin()
