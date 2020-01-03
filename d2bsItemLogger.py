@@ -59,8 +59,7 @@ def send_to_api(itemInfo):
                'Authorization': 'Bearer ' + api_token}
     payload = json.dumps(itemInfo, indent=4)
 
-    # r = requests.post(api_url, data=payload, headers=headers)
-    print(itemInfo)
+    r = requests.post(api_url, data=payload, headers=headers)
 
 
 def login(userInfo):
